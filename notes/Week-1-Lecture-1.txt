@@ -1,0 +1,19 @@
+CS 143
+John Cho -- Boelter Hall 3531H // OA T 2:30 - 3:30
+
+Week 1 Lecture 1
+
+DBMS (database management system)
+	- makes it convenient to access particular subset of data 
+		* in relational databases, we use SQL (structural query language)
+	- more efficient to grab rows when using a database
+	- permanancy -- make sure the data survives
+	- scalable (should be able to deal with massive amounts of data)
+	- allows for multiple users
+	
+** DBMS sits on top of the OS which uses Disk
+	- many are implemented with raw Disk IO
+	- on top of the DBMS sits an API (ODBC / JDBC)
+		* open database connection / java database connection
+
+		
