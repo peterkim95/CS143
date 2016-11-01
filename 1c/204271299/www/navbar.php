@@ -1,0 +1,1 @@
+<div id="navbar"><a href="index.php">Search</a><a href="add_movie.php">Add New Movie</a><a href="add_ad.php">Add New Actor/Director</a><a href="add_ma.php">Add Actor for Movie</a><a href="add_md.php">Add Director for Movie</a></div>
