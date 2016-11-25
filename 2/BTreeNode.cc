@@ -161,7 +161,7 @@ RC BTLeafNode::locate(int searchKey, int& eid)
 
 		memcpy(&currentKey, b+i, sizeof(int)); // get key in entry
 
-		if (currentKey = searchKey) {
+		if (currentKey == searchKey) {
 			eid = index_entry;
 			return 0;
 		}
