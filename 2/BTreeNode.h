@@ -7,8 +7,8 @@
  * @date 5/28/2008
  */
 
-#ifndef BTREENODE_H
-#define BTREENODE_H
+#ifndef BTNODE_H
+#define BTNODE_H
 
 #include "RecordFile.h"
 #include "PageFile.h"
@@ -18,13 +18,13 @@
  */
 class BTLeafNode {
   public:
-
-    static const int ENTRY_SIZE = 12; // sizeof(RecordId) + sizeof(int);
-    static const int MAX_ENTRIES = 85; // 1024 / 12 = 85 and 4 bytes remaining for nextnodeptr
-
-    // constructor
-    BTLeafNode();
-
+    static const int ENTRY_SIZE = 12;   // sizeof(recordID) + sizeof(int)
+    static const int MAX_ENTRIES = 85;  // 1024/12=85 and 4 bytes remaining for nextnodeptr
+   /**
+    * Constructor for leaf node; initialize its variables
+    */
+	BTLeafNode();
+	
    /**
     * Insert the (key, rid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
@@ -48,15 +48,13 @@ class BTLeafNode {
     RC insertAndSplit(int key, const RecordId& rid, BTLeafNode& sibling, int& siblingKey);
 
    /**
-    * If searchKey exists in the node, set eid to the index entry
-    * with searchKey and return 0. If not, set eid to the index entry
-    * immediately after the largest index key that is smaller than searchKey, 
-    * and return the error code RC_NO_SUCH_RECORD.
-    * Remember that keys inside a B+tree node are always kept sorted.
+    * Find the index entry whose key value is larger than or equal to searchKey
+    * and output the eid (entry id) whose key value &gt;= searchKey.
+    * Remember that keys inside a B+tree node are sorted.
     * @param searchKey[IN] the key to search for.
-    * @param eid[OUT] the index entry number with searchKey or immediately
-                      behind the largest key smaller than searchKey.
-    * @return 0 if searchKey is found. If not, RC_NO_SEARCH_RECORD.
+    * @param eid[OUT] the entry number that contains a key larger              
+    *                 than or equalty to searchKey.
+    * @return 0 if successful. Return an error code if there is an error.
     */
     RC locate(int searchKey, int& eid);
 
@@ -105,13 +103,20 @@ class BTLeafNode {
     */
     RC write(PageId pid, PageFile& pf);
 
-  private:
    /**
+    * Print the keys of the node to cout
+    */
+    void print();
+
+  private:
+	//declare the variables that a nonleaf must hold
+	// int numKeys;
+	/**
     * The main memory buffer for loading the content of the disk page 
     * that contains the node.
     */
-
     char buffer[PageFile::PAGE_SIZE];
+   
 }; 
 
 
@@ -120,11 +125,14 @@ class BTLeafNode {
  */
 class BTNonLeafNode {
   public:
-    static const int ENTRY_SIZE = 8; // sizeof(PageId) + sizeof(int);
+    static const int ENTRY_SIZE = 8;    // sizeof(pageid) + sizeof(int)
     static const int MAX_ENTRIES = 127; // 1024-8 / 8 = 127
-
-    BTNonLeafNode();    // constructor
-   /**
+	/**
+    * Constructor for nonleaf node; initialize its variables
+    */
+	BTNonLeafNode();
+  
+	/**
     * Insert a (key, pid) pair to the node.
     * Remember that all keys inside a B+tree node should be kept sorted.
     * @param key[IN] the key to insert
@@ -188,12 +196,19 @@ class BTNonLeafNode {
     */
     RC write(PageId pid, PageFile& pf);
 
-  private:
    /**
+    * Print the keys of the node to cout
+    */
+    void print();
+
+  private:
+	//declare the variables that a nonleaf must hold
+	// int numKeys;
+	/**
     * The main memory buffer for loading the content of the disk page 
     * that contains the node.
     */
     char buffer[PageFile::PAGE_SIZE];
 }; 
 
-#endif /* BTREENODE_H */
+#endif /* BTNODE_H */
